@@ -14,7 +14,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = trim($_POST["username"]);
     $password = $_POST["password"];
 
-    // Get user
     $sql = "SELECT * FROM users WHERE username = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $username);
@@ -43,23 +42,63 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <title>Login - Blog App</title>
     <style>
-        body { font-family: Arial; background: #f0f0f0; padding: 50px; }
-        form { background: #fff; padding: 30px; border-radius: 8px; max-width: 400px; margin: auto; }
-        input { width: 100%; padding: 10px; margin-top: 10px; }
-        button { background: #2ecc71; color: white; border: none; padding: 10px; width: 100%; }
-        .msg { margin-top: 15px; color: red; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #a29bfe, #81ecec);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+        button {
+            background: #2ecc71;
+            color: white;
+            border: none;
+            padding: 12px;
+            margin-top: 20px;
+            width: 100%;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .msg {
+            margin-top: 20px;
+            color: red;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 
-<h2 style="text-align:center;">🔐 Login</h2>
-
-<form method="POST">
-    <input type="text" name="username" placeholder="Enter Username" required>
-    <input type="password" name="password" placeholder="Enter Password" required>
-    <button type="submit">Login</button>
-    <div class="msg"><?php echo $msg; ?></div>
-</form>
+<div class="container">
+    <h2>🔐 Login</h2>
+    <form method="POST">
+        <input type="text" name="username" placeholder="Enter Username" required>
+        <input type="password" name="password" placeholder="Enter Password" required>
+        <button type="submit">Login</button>
+        <div class="msg"><?php echo $msg; ?></div>
+    </form>
+</div>
 
 </body>
 </html>

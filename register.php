@@ -1,11 +1,9 @@
 <?php
-// Start session
 session_start();
 
 // DB connection
 $conn = new mysqli("localhost", "root", "", "blog");
 
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -17,7 +15,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = trim($_POST["username"]);
     $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
-    // Insert user
     $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ss", $username, $password);
@@ -35,23 +32,67 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <title>Register - Blog App</title>
     <style>
-        body { font-family: Arial; background: #f2f2f2; padding: 50px; }
-        form { background: #fff; padding: 30px; border-radius: 8px; max-width: 400px; margin: auto; }
-        input { width: 100%; padding: 10px; margin-top: 10px; }
-        button { background: #3498db; color: white; border: none; padding: 10px; width: 100%; }
-        .msg { margin-top: 15px; color: green; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #dff9fb, #f6e58d);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px;
+            margin-top: 20px;
+            width: 100%;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .msg {
+            margin-top: 20px;
+            color: #27ae60;
+            text-align: center;
+        }
+        a {
+            color: #2980b9;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
 
-<h2 style="text-align:center;">📝 Register</h2>
-
-<form method="POST">
-    <input type="text" name="username" placeholder="Enter Username" required>
-    <input type="password" name="password" placeholder="Enter Password" required>
-    <button type="submit">Register</button>
-    <div class="msg"><?php echo $msg; ?></div>
-</form>
+<div class="container">
+    <h2>📝 Register</h2>
+    <form method="POST">
+        <input type="text" name="username" placeholder="Enter Username" required>
+        <input type="password" name="password" placeholder="Enter Password" required>
+        <button type="submit">Register</button>
+        <div class="msg"><?php echo $msg; ?></div>
+    </form>
+</div>
 
 </body>
 </html>

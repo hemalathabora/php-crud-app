@@ -16,7 +16,6 @@ if (!$post_id) {
     exit();
 }
 
-// Fetch post
 $stmt = $conn->prepare("SELECT * FROM posts WHERE id = ?");
 $stmt->bind_param("i", $post_id);
 $stmt->execute();
@@ -28,7 +27,6 @@ if (!$post) {
     exit();
 }
 
-// Update post
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $title = trim($_POST["title"]);
     $content = trim($_POST["content"]);
@@ -45,27 +43,80 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Edit Post</title>
+    <title>Edit Post - Blog App</title>
     <style>
-        body { font-family: Arial; padding: 40px; background: #f4f4f4; }
-        form { background: #fff; padding: 20px; max-width: 600px; margin: auto; border-radius: 8px; box-shadow: 0 0 8px #ccc; }
-        input, textarea { width: 100%; padding: 10px; margin-top: 10px; }
-        button { background: #2980b9; color: white; padding: 10px 20px; border: none; margin-top: 15px; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #ecf0f1;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 90%;
+            max-width: 700px;
+            background: white;
+            margin: 60px auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        label {
+            display: block;
+            margin-top: 20px;
+            color: #333;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border: 1px solid #bdc3c7;
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button {
+            background: #2980b9;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            margin-top: 25px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #216a94;
+        }
+        a {
+            display: block;
+            margin-top: 25px;
+            text-align: center;
+            color: #3498db;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
 
-<h2 style="text-align:center;">✏️ Edit Post</h2>
+<div class="container">
+    <h2>✏️ Edit Post</h2>
 
-<form method="POST">
-    <label>Title:</label>
-    <input type="text" name="title" value="<?php echo htmlspecialchars($post['title']); ?>" required>
+    <form method="POST">
+        <label>Title:</label>
+        <input type="text" name="title" value="<?php echo htmlspecialchars($post['title']); ?>" required>
 
-    <label>Content:</label>
-    <textarea name="content" rows="6" required><?php echo htmlspecialchars($post['content']); ?></textarea>
+        <label>Content:</label>
+        <textarea name="content" rows="8" required><?php echo htmlspecialchars($post['content']); ?></textarea>
 
-    <button type="submit">Update Post</button>
-</form>
+        <button type="submit">Update Post</button>
+    </form>
+
+    <a href="dashboard.php">⬅️ Back to Dashboard</a>
+</div>
 
 </body>
 </html>
